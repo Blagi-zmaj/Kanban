@@ -11,6 +11,7 @@ function List(props) {
 
   return (
     <div className="listElement">
+      {<i style={{color: "red"}} class="fas fa-atlas fa-2x"></i>}
       <h4>Lista: {props.listName}</h4>
       <Tasks
         updateTasks={(del, add) => {

@@ -1,9 +1,9 @@
 body {
-  background-color: grey;
+  background-color: #eee;
 }
 
 .listBox {
-  background-color: red;
+  background-color: #ddd;
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -11,8 +11,8 @@ body {
 }
 
 .listElement {
-  background-color: green;
-  border: dotted 3px gold;
+  box-shadow: 5px 5px 5px rgb(155, 154, 154);
+  border: dotted 1px rgb(133, 75, 167);
   display: inline-block;
   width: 20%;
   padding: 10px;
@@ -20,7 +20,9 @@ body {
 }
 
 .task {
-  border: solid 2px blue;
+  /* border: solid 2px #F3F7D4; */
+  /* #F3F7D4; */
+  box-shadow: 1px 1px 4px rgb(129, 129, 129);
 }
 
 .newTask {
