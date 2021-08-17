@@ -1,27 +1,43 @@
 import React, { useState } from "react";
-import Tasks from "../Tasks/Tasks.js";
+import { useTasks } from "./TaskProvider";
+import Task from "./Task";
+import NewTask from "./NewTask";
+import EditTask from "./EditTask";
 
-function List(props) {
-  const [tasks, setTasks] = useState(props.tasks);
+export default function List({ listName }) {
+  const { tasks } = useTasks();
+  const [showModal, setShowModal] = useState(false);
+  const [editTaskObj, setEditTaskObj] = useState();
+  const [showEditModal, setShowEditModal] = useState(false);
 
-  const updateTasks = () => {
-    setTasks(props.tasks);
-    console.log("Zadania z List: " + props.tasks[3].listName);
+  const editTask = (task) => {
+    setShowEditModal(!showEditModal);
+    console.log(task.content);
+    setEditTaskObj(task);
   };
 
   return (
-    <div className="listElement">
-      {<i style={{color: "red"}} class="fas fa-atlas fa-2x"></i>}
-      <h4>Lista: {props.listName}</h4>
-      <Tasks
-        updateTasks={(del, add) => {
-          props.updateTasks(del, add);
-        }}
-        listName={props.listName}
-        tasks={props.tasks}
-      />
-    </div>
+    <>
+      <div className="listElement">
+        <h2 style={{ color: "red" }}>{listName}</h2>
+        <h3>
+          {showModal ? null : <NewTask listName={listName} />}
+          {showEditModal ? (
+            <EditTask
+              doShowModal={(isShow) => setShowEditModal(isShow)}
+              {...editTaskObj}
+            />
+          ) : null}
+
+          <br />
+          <br />
+          {tasks.map((task, index) =>
+            task.listName === listName ? (
+              <Task key={index} {...task} edit={(task) => editTask(task)} />
+            ) : null
+          )}
+        </h3>
+      </div>
+    </>
   );
 }
-
-export default List;

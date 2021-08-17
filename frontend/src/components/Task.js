@@ -1,50 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
+import { useTasks } from "./TaskProvider";
 
-function Task(props) {
-  const editNote = () => {
-    console.log("Click edit button!");
-    props.whenEdit({
-      _id: props.id,
-      content: props.content,
-      listName: props.listName
-    });
+export default function Task({ _id, content, listName, edit }) {
+  const { removeTask, editTask } = useTasks();
+  const [newListName, setListName] = useState(listName);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const task = {
+    _id: _id,
+    content: content,
+    listName: newListName
+  };
+  const listNameChange = (event) => {
+    const listValue = event.target.value;
+    setListName(listValue);
+    setShowConfirm(true);
+    task.listName = newListName;
   };
 
-  const changeStatus = (e) => {
-    props.changeList({
-      _id: props.id,
-      content: props.content,
-      listName: e.target.value
-    });
-    // props.updateTasks(
-    //   { _id: props.id, content: props.content, listName: props.listName },
-    //   { _id: props.id, content: props.content, listName: e.target.value }
-    // );
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setShowConfirm(false);
+    editTask(task);
+  };
+
+  const cancelChangeList = () => {
+    setListName(listName);
   };
 
   return (
     <div className="task">
-      <div>{props.content}</div>
-      <br />
-      <button
-        onClick={() => {
-          props.whenDelete(props.id);
-        }}
-      >
-        Usuń
-      </button>
-      <button onClick={editNote}>Edytuj</button>
-      <select onChange={changeStatus}>
-        <option value="Status">Status</option>
-        <option value="Do zrobienia">Do zrobienia</option>
-        <option value="W trakcie">W trakcie</option>
-        <option value="Przełożone">Przełożone</option>
-        <option value="Zrobione">Zrobione</option>
-      </select>
+      {_id} <br />
+      <p>
+        {content} <br />
+      </p>
+      {listName} <br />
+      <button onClick={() => removeTask(_id)}>Usun</button>
+      <button onClick={() => edit(task)}>Edytuj</button>
+      <form onSubmit={handleSubmit}>
+        <select value={newListName} onChange={listNameChange}>
+          <option value="Status">Status</option>
+          <option value="Do zrobienia">Do zrobienia</option>
+          <option value="W trakcie">W trakcie</option>
+          <option value="Przełożone">Przełożone</option>
+          <option value="Zrobione">Zrobione</option>
+        </select>
+        {showConfirm ? (
+          <>
+            <button onClick={cancelChangeList}>Anuluj</button>
+            <input type="submit" value="Potwierdz"></input>
+          </>
+        ) : null}
+      </form>
       <br />
       <br />
     </div>
   );
 }
-
-export default Task;
