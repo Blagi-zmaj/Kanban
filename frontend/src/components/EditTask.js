@@ -1,48 +1,49 @@
 import React, { useState } from "react";
+import { useTasks } from "./TaskProvider";
 
-function EditTask(props) {
-  const [newContent, setNewContent] = useState(props.content);
-  const [newListName, setNewListName] = useState(props.listName);
+export default function EditTask({ _id, content, listName, doShowModal }) {
+  const [taskContent, setTaskContent] = useState(content);
+  const [taskListName, setTaskListName] = useState(listName);
+  const { editTask } = useTasks();
 
-  const contentChange = (event) => {
+  const editContent = (event) => {
     const contentValue = event.target.value;
-    setNewContent(contentValue);
+    setTaskContent(contentValue);
   };
 
-  const listNameChange = (event) => {
-    const listName = event.target.value;
-    setNewListName(listName);
+  const editListName = (event) => {
+    const listNameValue = event.target.value;
+    setTaskListName(listNameValue);
   };
 
-  const editTask = () => {
-    const updatedTask = {
-      content: newContent,
-      listName: newListName,
-      _id: props.id
-    };
-    props.onUpdate(updatedTask);
+  const edittedTask = {
+    _id: _id,
+    content: taskContent,
+    listName: taskListName
+  };
+
+  const confirmEdit = () => {
+    doShowModal(false);
+    editTask(edittedTask);
   };
 
   return (
     <div>
-      <label for="content"></label>
+      <label htmlFor="content"></label>
       <input
+        value={taskContent}
+        onChange={editContent}
         type="text"
-        value={newContent}
-        onChange={contentChange}
         id="content"
       ></input>
-      <label for="listName"></label>
+      <label htmlFor="listName"></label>
       <input
+        value={taskListName}
+        onChange={editListName}
         type="text"
-        value={newListName}
-        onChange={listNameChange}
         id="listName"
       ></input>
-      {/* <button onClick={props.onCancel}>Anuluj</button> */}
-      <button onClick={editTask}>Potwierdź</button>
+      <button onClick={confirmEdit}>Potwierdź</button>
     </div>
   );
 }
-
-export default EditTask;
