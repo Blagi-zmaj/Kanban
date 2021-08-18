@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useTasks } from "./TaskProvider";
 
-function NewTask(props) {
+export default function NewTask(props) {
+  const { addTask } = useTasks();
   const [showModal, setShowModal] = useState(false);
-  const [newContent, setContent] = useState("");
-  const [newListName, setListName] = useState(props.listName);
+  const [content, setContent] = useState("");
+  const [listName, setListName] = useState(props.listName);
 
   const contentChange = (e) => {
     const inputValue = e.target.value;
@@ -21,16 +23,16 @@ function NewTask(props) {
     setShowModal(!showModal);
   };
 
-  const addTask = () => {
-    const newTask = {
-      content: newContent,
-      listName: newListName
+  const addNewTask = (e) => {
+    e.preventDefault();
+    const task = {
+      _id: Math.floor(Math.random() * 1000000),
+      content: content,
+      listName: listName
     };
-    props.onAdd(newTask);
-    // console.log(newTask.content, newTask.listName);
-    // setContent("");
-    // setListName("");
+    setContent("");
     setShowModal(!showModal);
+    addTask(task);
   };
 
   return showModal ? (
@@ -39,7 +41,7 @@ function NewTask(props) {
         <label htmlFor="content"></label>
         <input
           onChange={contentChange}
-          value={newContent}
+          value={content}
           id="content"
           type="text"
           required
@@ -48,29 +50,19 @@ function NewTask(props) {
         <label htmlFor="list"></label>
         <input
           onChange={listNameChange}
-          value={newListName}
+          value={listName}
           id="list"
           type="text"
           required
           autoComplete="off"
         ></input>
         <button onClick={changeModal}>Anuluj</button>
-        {/* <button onClick={addTask}>Dodaj</button> */}
-        <button onClick={addTask} type="submit" value="Dodaj">
+        <button type="submit" value="Dodaj" onClick={addNewTask}>
           Dodaj
         </button>
-        {/* <h2>{`${content} ${listName}`}</h2> */}
       </form>
     </div>
   ) : (
-    <button
-      onClick={() => {
-        setShowModal(!showModal);
-      }}
-    >
-      Dodaj zadanie
-    </button>
+    <button onClick={changeModal}>Dodaj zadanie</button>
   );
 }
-
-export default NewTask;
