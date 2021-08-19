@@ -67,7 +67,7 @@ class taskActions{
         let listName = req.params.listName;
         try{
             await Task.findByIdAndDelete(id, () => {
-                console.log(`Delete task with id: ${id} from list: ${listName}`);
+                console.log(`Delete task with id: ${id}}`);
             });
             res.sendStatus(200);
         }catch(e){
