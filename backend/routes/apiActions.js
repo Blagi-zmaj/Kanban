@@ -35,7 +35,7 @@ class taskActions{
         let task;
         try{
             task = new Task(taskObject);
-            task.save(()=>{
+            await task.save(()=>{
                 console.log(`Task with content: ${content} written. \nTask list name: ${listName}`);
             });
             res.json(task);

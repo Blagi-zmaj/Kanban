@@ -1,0 +1,35 @@
+{"tasks" :
+  [
+    {
+      "_id": 12345,
+      "content": "Przeprowadzić sesje RPG",
+      "listName": "Do zrobienia"
+    },
+    {
+      "_id": 22323,
+      "content": "Kupic psa",
+      "listName": "Do zrobienia"
+    },
+    {
+      "_id": 54321,
+      "content": "Umówić spotkanie na planszówki ",
+      "listName": "Przełożone"
+    },
+    {
+      "_id": 22111,
+      "content": "Umówić granie ",
+      "listName": "Przełożone"
+    },
+    {
+      "_id": 87573,
+      "content": "Zrobić projekt",
+      "listName": "Zrobione"
+    },
+    {
+      "_id": 23211,
+      "content": "Zrobić pranie",
+      "listName": "Zrobione"
+    }
+  ]
+}
+  

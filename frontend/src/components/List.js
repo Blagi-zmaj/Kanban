@@ -10,6 +10,8 @@ export default function List({ listName }) {
   const [editTaskObj, setEditTaskObj] = useState();
   const [showEditModal, setShowEditModal] = useState(false);
 
+  // console.log(tasks);
+
   const editTask = (task) => {
     setShowEditModal(!showEditModal);
     console.log(task.content);
@@ -36,6 +38,7 @@ export default function List({ listName }) {
               <Task key={index} {...task} edit={(task) => editTask(task)} />
             ) : null
           )}
+          {console.log(tasks)}
         </h3>
       </div>
     </>
