@@ -44,6 +44,7 @@ export default function EditTask({ _id, content, listName, doShowModal }) {
         id="listName"
       ></input>
       <button onClick={confirmEdit}>Potwierdź</button>
+      <button onClick={() => doShowModal(false)}>Anuluj</button>
     </div>
   );
 }

@@ -21,6 +21,7 @@ export default function NewTask(props) {
 
   const changeModal = () => {
     setShowModal(!showModal);
+    setContent("");
   };
 
   const addNewTask = (e) => {
